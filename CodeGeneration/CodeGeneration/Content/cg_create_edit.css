@@ -1,0 +1,105 @@
+﻿body {
+}
+
+#html-modal-editor {
+    min-height: 400px;
+    width: 100%;
+}
+
+#js-on-modal-open-editor, #js-on-cg-execution {
+    width: 100%;
+    min-height: 400px;
+}
+
+.panel-body {
+    padding: 0;
+}
+
+#preview-title {
+    border-radius: 0;
+    padding: 5px 9px;
+}
+
+#save-notification {
+    margin-right: 8px;
+    display: none;
+    font-weight: bold;
+    padding: 3px 5px;
+    font-size: 11px;
+}
+
+.tagsinput {
+    min-height: 35px !important;
+    display: inline-block;
+    border-radius: 7px;
+    padding-top: 1px !important;
+    position: relative;
+    vertical-align: top;
+}
+
+#preview-outer-container {
+    margin-bottom: 10px;
+    overflow: hidden;
+    display: none;
+    border-radius: 0;
+}
+
+    #preview-outer-container .panel-title {
+        font-size: 14px;
+    }
+
+#more-options-div {
+    background-color: #DDD;
+    margin-top: -20px;
+    z-index: 1;
+    position: relative;
+    color: black;
+    border-top: 1px solid #bbb;
+    font-size: 12px;
+    width: 100%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    cursor: pointer;
+}
+
+#more-options-container {
+    margin-top: 12px;
+    display: none;
+}
+
+#more-options-div .glyphicon {
+    position: relative;
+    top: 2px;
+}
+
+#more-options-div:hover {
+    background-color: #EEE;
+}
+
+#cg-description {
+    height: 90px;
+}
+
+#cg-edit-container label {
+    font-weight: normal;
+    cursor: pointer;
+}
+
+#page-tabs li a {
+    border-radius: 0px;
+    border: 0;
+    border-right: 1px solid #CCC;
+}
+
+.panel.panel-inverse .panel-title {
+    color: #f1f1f1;
+    background-color: #444;
+    border-color: #444;
+}
+.panel.panel-inverse .panel-heading {
+    background-color:#444;
+}
+
+.panel.panel-inverse {
+    border-color: #444;
+}

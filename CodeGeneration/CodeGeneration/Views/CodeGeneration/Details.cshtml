@@ -1,0 +1,81 @@
+﻿@model CodeGeneration.Models.CodeGeneration.CodeGenerationVM
+@{
+    ViewBag.Title = "Details";
+}
+
+@section Scripts {
+    @Styles.Render("~/Content/cg_create_edit.css")
+
+    @Scripts.Render("~/Plugins/ace-builds-master/ace-builds-master/src-min-noconflict/ace.js")
+    @Scripts.Render("~/Scripts/cg-component-engine.js")
+
+    <style>
+        .panel-body {
+            padding: 5px 12px;
+            padding-top: 10px;
+        }
+    </style>
+
+    <script type="text/javascript">
+        function process() {
+            $('#preview-outer-container').hide();
+
+            var options = {};
+            options.ModalHTML = $("#html-text").val();
+            options.ModalName = "@Model.CGModel.CGName";
+            options.OnModalOpenJS = $('#cg-script-on-modal-load').val();
+            options.OnExecuteCGJS = $('#cg-script-on-execute').val();
+            options.OnAfterExecuteCGJS = function () {
+                $('#preview-outer-container').fadeIn();
+            };
+
+            cgComponent.setAreaForInsertingPageContainer("#preview-container");
+            cgComponent.resetEverything();
+            cgComponent.initiate(options);
+            cgComponent.start();
+
+        }
+
+        function closePreview() {
+            $('#preview-outer-container').hide();
+            cgComponent.resetEverything();
+        }
+    </script>
+}
+
+
+
+@Html.HiddenFor(x => x.CGModel.HTMLThatGoesInModal, new { id = "html-text" })
+@Html.HiddenFor(x => x.CGModel.ScriptThatExecutesOnModalLoad, new { id = "cg-script-on-modal-load" })
+@Html.HiddenFor(x => x.CGModel.ScriptThatExecutesUponButtonPress, new { id = "cg-script-on-execute" })
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            @Html.Partial("_PreviewContainer")
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="panel panel-inverse">
+                <div class="panel-heading">
+                    <h1 class="panel-title">
+                        <span class="glyphicon glyphicon-fire"></span>
+                        @Model.CGModel.CGName
+                    </h1>
+                </div>
+                <div class="panel-body">
+                    <p>
+                        @Model.CGModel.CGDescription
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div id="pages-container"></div>

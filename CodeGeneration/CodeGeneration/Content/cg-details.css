@@ -1,0 +1,90 @@
+﻿body {
+}
+
+#html-modal-editor {
+    min-height: 400px;
+    width: 100%;
+}
+
+#js-on-modal-open-editor, #js-on-cg-execution {
+    width: 100%;
+    min-height: 400px;
+}
+
+.panel-body {
+    padding: 0;
+}
+
+#preview-title {
+    border-radius: 5px;
+    background-color: #428bca;
+    display: block;
+    padding: 3px 5px;
+    color: white;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+#save-notification {
+    margin-right: 8px;
+    display: none;
+    font-weight:bold;
+    padding:3px 5px;
+    font-size:11px;
+}
+
+.tagsinput {
+    min-height: 35px !important;
+    display: inline-block;
+    border-radius: 7px;
+    padding-top: 1px !important;
+    position: relative;
+    vertical-align: top;
+}
+
+#preview-outer-container {
+    margin-bottom: 10px;
+    border: 1px solid #E0E0E0;
+    border-radius: 5px;
+    overflow: hidden;
+    padding: 9px;
+    box-shadow: 1px 1px 9px #F3F3F3;
+    display: none;
+}
+
+#more-options-div {
+    background-color:#DDD;
+    margin-top:-20px;
+    z-index:1;
+    position:relative;
+    color:black;
+    border-top:1px solid #bbb;
+    font-size:12px;
+    width:100%;
+    padding-top:5px;
+    padding-bottom:5px;
+    cursor:pointer;
+}
+
+#more-options-container {
+    margin-top:12px;
+    display:none;
+}
+
+#more-options-div .glyphicon {
+    position:relative;
+    top:2px;
+}
+
+#more-options-div:hover {
+    background-color:#EEE;
+}
+
+#cg-description {
+    height:90px;
+}
+
+#cg-edit-container label {
+    font-weight:normal;
+    cursor:pointer;
+}

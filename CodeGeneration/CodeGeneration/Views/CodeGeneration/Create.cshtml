@@ -1,0 +1,151 @@
+﻿@model CodeGeneration.Models.CodeGeneration.CodeGenerationVM
+
+@{
+    ViewBag.Title = "Create";
+    ViewBag.DashboardActive = "active";
+    ViewBag.CreatingNewCG = true;
+}
+
+@section Scripts {
+    @Styles.Render("~/Plugins/tags-input/jquery.tagsinput.css")
+    @Scripts.Render("~/Plugins/tags-input/jquery.tagsinput.min.js")
+
+    @Styles.Render("~/Content/cg_create_edit.css")
+    @Scripts.Render("~/Scripts/cg-component-engine.js")
+
+    @Scripts.Render("~/Plugins/emmet/emmet.js")
+    @Scripts.Render("~/Plugins/ace-builds-master/ace-builds-master/src-min-noconflict/ace.js")
+    @Scripts.Render("~/Plugins/ace-builds-master/ace-builds-master/src-min-noconflict/ext-emmet.js")
+    @Scripts.Render("~/Plugins/ace-builds-master/ace-builds-master/src-min-noconflict/ext-language_tools.js")
+
+    @Scripts.Render("~/Scripts/cg_create_edit.js")
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            @Html.Partial("_DashboardMenu")
+        </div>
+    </div>
+
+
+    <div class="row" style="">
+        <div class="col-md-12" style="margin-bottom: 10px; vertical-align: top;">
+            <div class="well" id="cg-edit-container" style="padding-top: 10px; border-radius: 0px; top: -11px; position: relative; margin-bottom: 0;">
+                @Html.HiddenFor(x => x.CGModel.CodeGenerationID, new { id = "code-generation-id" })
+                <label style="display: inline" for="cg-name">Code Generation Name :</label>
+                @Html.TextBoxFor(x => x.CGModel.CGName, new { @class = "form-control", autofocus = "autofocus", id = "cg-name", style = "width:200px;display:inline-block;" })
+
+                <label for="cg-publish" style="margin-left: 15px; display: inline">Publish?</label>
+                @Html.CheckBoxFor(x => x.CGModel.Published, new { style = "position:relative;top:1px;", id = "cg-publish" })
+
+                <div class="pull-right">
+                    <span class="label label-success" id="save-notification">Saving...
+                    </span>
+                    <button class="btn btn-sm btn-primary" onclick="save();">
+                        <span class="fa fa-save"></span>
+                        <span>Save</span>
+                    </button>
+                    <button class="btn btn-sm btn-info" onclick="preview();">
+                        <span class="fa fa-eye"></span>
+                        <span>Test / Preview</span>
+                    </button>
+                </div>
+
+                <div id="more-options-container">
+                    <form onsubmit="return false;" class="form-horizontal">
+                        <div class="col-md-6 no-margin no-padding">
+                            <div class="form-group">
+                                <label class="col-sm-3" style="">
+                                    CG Description
+                                </label>
+                                <div class="col-sm-9" style="padding-left: 30px;">
+                                    @Html.TextAreaFor(x => x.CGModel.CGDescription, new { id = "cg-description", @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+
+                <div class="clearfix"></div>
+
+            </div>
+
+            <div id="more-options-div" style="text-align: center;">
+                <div id="more-options-show">
+                    <span class="glyphicon glyphicon-chevron-down"></span>
+                    <span>Add/Edit More Details</span>
+                    <span class="glyphicon glyphicon-chevron-down"></span>
+                </div>
+
+                <div id="more-options-hide" style="display: none;">
+                    <span class="glyphicon glyphicon-chevron-up"></span>
+                    <span>Hide Details</span>
+                    <span class="glyphicon glyphicon-chevron-up"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            @Html.Partial("_PreviewContainer")
+        </div>
+
+        <div class="col-md-12">
+            <div class="panel-group" id="accordion">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h1 class="panel-title">
+                            <a id="html-collapse-link" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                <span class="fa fa-code"></span>
+                                <span>Modal HTML</span>
+                            </a>
+                        </h1>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <div id="html-modal-editor">@Model.CGModel.HTMLThatGoesInModal</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <h1 class="panel-title">
+                            <a id="js-open-collapse-link" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                                <i class="fa fa-tasks"></i>
+                                <span>Javascript (On Modal Open Event)</span>
+                            </a>
+                        </h1>
+                    </div>
+                    <div id="collapseTwo" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div id="js-on-modal-open-editor">@Model.CGModel.ScriptThatExecutesOnModalLoad</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h1 class="panel-title">
+                            <a id="js-exec-collapse-link" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                                <span class="fa fa-magic"></span>
+                                <span>Javascript (On Code Generation Execution Event)</span>
+                            </a>
+                        </h1>
+                    </div>
+                    <div id="collapseThree" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div id="js-on-cg-execution">@Model.CGModel.ScriptThatExecutesUponButtonPress</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<br />
+<br />

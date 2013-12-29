@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - My ASP.NET MVC Application</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    @Styles.Render("~/Plugins/font-awesome-4.0.3/css/font-awesome.min.css")
+    @Styles.Render("~/Content/bootstrap.min.css")
+    @Styles.Render("~/Content/global.css")
+
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Scripts/bootstrap.min.js")
+    @RenderSection("scripts", required: false)
+</head>
+<body>
+    <div class="navbar-wrapper">
+        <div class="navbar navbar-inverse navbar-static-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Code Generation (ALPHA!)</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Languages
+                                <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="@Url.Action("Index", "Languages")">
+                                        All Languages
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="nav pull-right navbar-nav">
+
+                        @if (Html.IsUserAuthenticated())
+                        {
+                            <li class="@ViewBag.DashboardActive">
+                                <a href="@Url.Action("Index", "Dashboard")">
+                                    <span class="glyphicon glyphicon-dashboard"></span>
+                                    <span>Dashboard</span>
+                                </a>
+                            </li>
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <span class="glyphicon glyphicon-cog"></span>
+                                    Account <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="#">Change Password
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Logout", "User")">Logout
+                                </a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <a href="@Url.Action("Register", "User")">Register
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Login", "User")">Login
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @RenderBody()
+
+</body>
+</html>

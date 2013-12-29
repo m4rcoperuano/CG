@@ -1,0 +1,126 @@
+﻿@model IEnumerable<CodeGeneration.Domain.Models.CodeGenerationModel>
+
+@{
+    ViewBag.Title = "Index";
+    ViewBag.DashboardMenu_CG = "active";
+    ViewBag.DashboardActive = "active";
+}
+
+@section Scripts {
+    <style>
+        .cg-description-column {
+            max-width: 600px;
+        }
+        .cg-updated-at-column {
+            width: 170px
+        }
+        .cg-ok-column {
+            width: 50px;
+            text-align: center;
+        }
+    </style>
+
+    <script type="text/javascript">
+
+        function deleteThis(id) {
+            var conf = confirm("Are you sure you want to delete your Code Generator??");
+            if (conf==true)
+            {
+                var data = { id: id };
+                var url = "@Url.Action("Delete", "CodeGeneration")";
+                $.post(url, data, function (res) {
+                    window.location.reload(true);
+                });
+            }
+        }
+    </script>
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            @Html.Partial("_DashboardMenu")
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12" style="margin-bottom: 10px">
+            <h4 class="list-title" style="float: left; margin-bottom: 1px; margin-top: 5px;">
+                <span class="glyphicon glyphicon-fire"></span>
+                Your Code Generators
+            </h4>
+
+            <a href="@Url.Action("Create", "CodeGeneration")" class="btn btn-primary pull-right">
+                <span class="glyphicon glyphicon-plus-sign" style="position: relative; top: 2px"></span>
+                Create
+            </a>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>CG Name
+                        </th>
+                        <th>Description
+                        </th>
+                        <th>Last Updated
+                        </th>
+                        <th>Published?
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var cg in Model)
+                    {
+                        <tr>
+                            <td>
+                                <a href="@Url.Action("Edit", "CodeGeneration", new { @id = cg.CodeGenerationID })">
+                                    @cg.CGName
+                                </a>
+                            </td>
+                            <td class="cg-description-column">
+                                @cg.CGDescription
+                            </td>
+                            <td class="cg-updated-at-column">
+                                @cg.UpdatedAt.ToString("g")
+                            </td>
+                            <td class="cg-ok-column">
+                                @if (cg.Published)
+                                {
+                                    <span class="glyphicon glyphicon-ok"></span>
+                                }
+                            </td>
+                            <td style="width: 25px;">
+                                <div class="dropdown">
+                                    <a data-toggle="dropdown" href="#">
+                                        <span class="glyphicon glyphicon-cog"></span>
+                                    </a>
+                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                        <li>
+                                            <a href="#del" onclick="deleteThis('@cg.CodeGenerationID')">
+                                                <span class="glyphicon glyphicon-minus-sign"></span>
+                                                Delete
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </td>
+                        </tr>
+                    }
+
+                    @if (Model.Count() <= 0)
+                    {
+                        <tr>
+                            <td colspan="5">No code generations found
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,58 @@
+﻿@model CodeGeneration.Models.User.LoginVM
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-7">
+            <div class="well"></div>
+        </div>
+        <div class="col-md-5">
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h1 class="panel-title">
+                        <span class="glyphicon glyphicon-lock"></span>
+                        Login
+                    </h1>
+                </div>
+                <div class="panel-body">
+                    @using (Html.BeginForm("Login", "User", FormMethod.Post, new { @class = "form-horizontal" }))
+                    {
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.Email, new { @class = "col-sm-4" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
+                            </div>
+                        </div>
+                
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.Password, new { @class = "col-sm-4" })
+                            <div class="col-sm-8">
+                                @Html.PasswordFor(x => x.Password, new { @class = "form-control" })
+                            </div>
+                        </div>
+                
+                        <div class="form-group">
+                            <div class="col-sm-8 col-sm-offset-4">
+                                @Html.CheckBoxFor(x => x.RememberMe, new { style = "top:1px;position:relative;" })
+                                <span>Remember Me</span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="col-sm-8 col-sm-offset-4">
+                                <button class="btn btn-primary" type="submit">
+                                    Login
+                                </button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

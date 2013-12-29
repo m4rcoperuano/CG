@@ -1,0 +1,402 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CodeGenerationModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="CodeGenerationModelStoreContainer">
+          <EntitySet Name="CodeGeneration_TagModel" EntityType="CodeGenerationModel.Store.CodeGeneration_TagModel" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CodeGenerators" EntityType="CodeGenerationModel.Store.CodeGenerators" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="UserProfile" EntityType="CodeGenerationModel.Store.UserProfile" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="webpages_Membership" EntityType="CodeGenerationModel.Store.webpages_Membership" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="webpages_OAuthMembership" EntityType="CodeGenerationModel.Store.webpages_OAuthMembership" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="webpages_Roles" EntityType="CodeGenerationModel.Store.webpages_Roles" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="webpages_UsersInRoles" EntityType="CodeGenerationModel.Store.webpages_UsersInRoles" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_CodeGeneration_TagModel_CodeGenerators" Association="CodeGenerationModel.Store.FK_CodeGeneration_TagModel_CodeGenerators">
+            <End Role="CodeGenerators" EntitySet="CodeGenerators" />
+            <End Role="CodeGeneration_TagModel" EntitySet="CodeGeneration_TagModel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CodeGenerators_UserProfile" Association="CodeGenerationModel.Store.FK_CodeGenerators_UserProfile">
+            <End Role="UserProfile" EntitySet="UserProfile" />
+            <End Role="CodeGenerators" EntitySet="CodeGenerators" />
+          </AssociationSet>
+          <AssociationSet Name="fk_RoleId" Association="CodeGenerationModel.Store.fk_RoleId">
+            <End Role="webpages_Roles" EntitySet="webpages_Roles" />
+            <End Role="webpages_UsersInRoles" EntitySet="webpages_UsersInRoles" />
+          </AssociationSet>
+          <AssociationSet Name="fk_UserId" Association="CodeGenerationModel.Store.fk_UserId">
+            <End Role="UserProfile" EntitySet="UserProfile" />
+            <End Role="webpages_UsersInRoles" EntitySet="webpages_UsersInRoles" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="CodeGeneration_TagModel">
+          <Key>
+            <PropertyRef Name="CodeGeneration_Tag_ID" />
+          </Key>
+          <Property Name="CodeGeneration_Tag_ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="TagName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedAt" Type="datetime" Nullable="false" />
+          <Property Name="CodeGeneration_Id" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CodeGenerators">
+          <Key>
+            <PropertyRef Name="CodeGenerationID" />
+          </Key>
+          <Property Name="CodeGenerationID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CGName" Type="nvarchar" Nullable="false" MaxLength="200" />
+          <Property Name="CGDescription" Type="nvarchar" Nullable="false" MaxLength="200" />
+          <Property Name="CGCreatedBy" Type="int" Nullable="false" />
+          <Property Name="HTMLThatGoesInModal" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ScriptThatExecutesUponButtonPress" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ScriptThatExecutesOnModalLoad" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedAt" Type="datetime" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="Published" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserProfile">
+          <Key>
+            <PropertyRef Name="id_user" />
+          </Key>
+          <Property Name="id_user" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="email" Type="nvarchar" Nullable="false" MaxLength="56" />
+          <Property Name="FirstName" Type="nvarchar" Nullable="false" MaxLength="250" />
+          <Property Name="LastName" Type="nvarchar" Nullable="false" MaxLength="250" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedAt" Type="datetime" Nullable="false" />
+          <Property Name="LastLoggedIn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="webpages_Membership">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="ConfirmationToken" Type="nvarchar" MaxLength="128" />
+          <Property Name="IsConfirmed" Type="bit" />
+          <Property Name="LastPasswordFailureDate" Type="datetime" />
+          <Property Name="PasswordFailuresSinceLastSuccess" Type="int" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" Nullable="false" MaxLength="128" />
+          <Property Name="PasswordChangedDate" Type="datetime" />
+          <Property Name="PasswordSalt" Type="nvarchar" Nullable="false" MaxLength="128" />
+          <Property Name="PasswordVerificationToken" Type="nvarchar" MaxLength="128" />
+          <Property Name="PasswordVerificationTokenExpirationDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="webpages_OAuthMembership">
+          <Key>
+            <PropertyRef Name="Provider" />
+            <PropertyRef Name="ProviderUserId" />
+          </Key>
+          <Property Name="Provider" Type="nvarchar" Nullable="false" MaxLength="30" />
+          <Property Name="ProviderUserId" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="webpages_Roles">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="nvarchar" Nullable="false" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="webpages_UsersInRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_CodeGeneration_TagModel_CodeGenerators">
+          <End Role="CodeGenerators" Type="CodeGenerationModel.Store.CodeGenerators" Multiplicity="1" />
+          <End Role="CodeGeneration_TagModel" Type="CodeGenerationModel.Store.CodeGeneration_TagModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CodeGenerators">
+              <PropertyRef Name="CodeGenerationID" />
+            </Principal>
+            <Dependent Role="CodeGeneration_TagModel">
+              <PropertyRef Name="CodeGeneration_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CodeGenerators_UserProfile">
+          <End Role="UserProfile" Type="CodeGenerationModel.Store.UserProfile" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CodeGenerators" Type="CodeGenerationModel.Store.CodeGenerators" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="id_user" />
+            </Principal>
+            <Dependent Role="CodeGenerators">
+              <PropertyRef Name="CGCreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_RoleId">
+          <End Role="webpages_Roles" Type="CodeGenerationModel.Store.webpages_Roles" Multiplicity="1" />
+          <End Role="webpages_UsersInRoles" Type="CodeGenerationModel.Store.webpages_UsersInRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="webpages_Roles">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="webpages_UsersInRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_UserId">
+          <End Role="UserProfile" Type="CodeGenerationModel.Store.UserProfile" Multiplicity="1" />
+          <End Role="webpages_UsersInRoles" Type="CodeGenerationModel.Store.webpages_UsersInRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="id_user" />
+            </Principal>
+            <Dependent Role="webpages_UsersInRoles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CodeGenerationModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="CodeGenerationEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="CodeGeneration_TagModel" EntityType="CodeGenerationModel.CodeGeneration_TagModel" />
+          <EntitySet Name="CodeGenerators" EntityType="CodeGenerationModel.CodeGenerator" />
+          <EntitySet Name="UserProfiles" EntityType="CodeGenerationModel.UserProfile" />
+          <EntitySet Name="webpages_Membership" EntityType="CodeGenerationModel.webpages_Membership" />
+          <EntitySet Name="webpages_OAuthMembership" EntityType="CodeGenerationModel.webpages_OAuthMembership" />
+          <EntitySet Name="webpages_Roles" EntityType="CodeGenerationModel.webpages_Roles" />
+          <AssociationSet Name="FK_CodeGeneration_TagModel_CodeGenerators" Association="CodeGenerationModel.FK_CodeGeneration_TagModel_CodeGenerators">
+            <End Role="CodeGenerator" EntitySet="CodeGenerators" />
+            <End Role="CodeGeneration_TagModel" EntitySet="CodeGeneration_TagModel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CodeGenerators_UserProfile" Association="CodeGenerationModel.FK_CodeGenerators_UserProfile">
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+            <End Role="CodeGenerator" EntitySet="CodeGenerators" />
+          </AssociationSet>
+          <AssociationSet Name="webpages_UsersInRoles" Association="CodeGenerationModel.webpages_UsersInRoles">
+            <End Role="webpages_Roles" EntitySet="webpages_Roles" />
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="CodeGeneration_TagModel">
+          <Key>
+            <PropertyRef Name="CodeGeneration_Tag_ID" />
+          </Key>
+          <Property Type="Int32" Name="CodeGeneration_Tag_ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="TagName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="CreatedAt" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="UpdatedAt" Nullable="false" Precision="3" />
+          <Property Type="Guid" Name="CodeGeneration_Id" Nullable="false" />
+          <NavigationProperty Name="CodeGenerator" Relationship="CodeGenerationModel.FK_CodeGeneration_TagModel_CodeGenerators" FromRole="CodeGeneration_TagModel" ToRole="CodeGenerator" />
+        </EntityType>
+        <EntityType Name="CodeGenerator">
+          <Key>
+            <PropertyRef Name="CodeGenerationID" />
+          </Key>
+          <Property Type="Guid" Name="CodeGenerationID" Nullable="false" />
+          <Property Type="String" Name="CGName" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="CGDescription" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="CGCreatedBy" Nullable="false" />
+          <Property Type="String" Name="HTMLThatGoesInModal" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ScriptThatExecutesUponButtonPress" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ScriptThatExecutesOnModalLoad" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="CreatedAt" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="UpdatedAt" Nullable="false" Precision="3" />
+          <Property Type="Boolean" Name="Active" Nullable="false" />
+          <Property Type="Boolean" Name="Published" Nullable="false" />
+          <NavigationProperty Name="CodeGeneration_TagModel" Relationship="CodeGenerationModel.FK_CodeGeneration_TagModel_CodeGenerators" FromRole="CodeGenerator" ToRole="CodeGeneration_TagModel" />
+          <NavigationProperty Name="UserProfile" Relationship="CodeGenerationModel.FK_CodeGenerators_UserProfile" FromRole="CodeGenerator" ToRole="UserProfile" />
+        </EntityType>
+        <EntityType Name="UserProfile">
+          <Key>
+            <PropertyRef Name="id_user" />
+          </Key>
+          <Property Type="Int32" Name="id_user" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="email" Nullable="false" MaxLength="56" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="FirstName" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="LastName" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="CreatedAt" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="UpdatedAt" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="LastLoggedIn" Nullable="false" Precision="3" />
+          <NavigationProperty Name="CodeGenerators" Relationship="CodeGenerationModel.FK_CodeGenerators_UserProfile" FromRole="UserProfile" ToRole="CodeGenerator" />
+          <NavigationProperty Name="webpages_Roles" Relationship="CodeGenerationModel.webpages_UsersInRoles" FromRole="UserProfile" ToRole="webpages_Roles" />
+        </EntityType>
+        <EntityType Name="webpages_Membership">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Type="Int32" Name="UserId" Nullable="false" />
+          <Property Type="DateTime" Name="CreateDate" Precision="3" />
+          <Property Type="String" Name="ConfirmationToken" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsConfirmed" />
+          <Property Type="DateTime" Name="LastPasswordFailureDate" Precision="3" />
+          <Property Type="Int32" Name="PasswordFailuresSinceLastSuccess" Nullable="false" />
+          <Property Type="String" Name="Password" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="PasswordChangedDate" Precision="3" />
+          <Property Type="String" Name="PasswordSalt" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="PasswordVerificationToken" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="PasswordVerificationTokenExpirationDate" Precision="3" />
+        </EntityType>
+        <EntityType Name="webpages_OAuthMembership">
+          <Key>
+            <PropertyRef Name="Provider" />
+            <PropertyRef Name="ProviderUserId" />
+          </Key>
+          <Property Type="String" Name="Provider" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ProviderUserId" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="UserId" Nullable="false" />
+        </EntityType>
+        <EntityType Name="webpages_Roles">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Type="Int32" Name="RoleId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="RoleName" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UserProfiles" Relationship="CodeGenerationModel.webpages_UsersInRoles" FromRole="webpages_Roles" ToRole="UserProfile" />
+        </EntityType>
+        <Association Name="FK_CodeGeneration_TagModel_CodeGenerators">
+          <End Type="CodeGenerationModel.CodeGenerator" Role="CodeGenerator" Multiplicity="1" />
+          <End Type="CodeGenerationModel.CodeGeneration_TagModel" Role="CodeGeneration_TagModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CodeGenerator">
+              <PropertyRef Name="CodeGenerationID" />
+            </Principal>
+            <Dependent Role="CodeGeneration_TagModel">
+              <PropertyRef Name="CodeGeneration_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CodeGenerators_UserProfile">
+          <End Type="CodeGenerationModel.UserProfile" Role="UserProfile" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="CodeGenerationModel.CodeGenerator" Role="CodeGenerator" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="id_user" />
+            </Principal>
+            <Dependent Role="CodeGenerator">
+              <PropertyRef Name="CGCreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="webpages_UsersInRoles">
+          <End Type="CodeGenerationModel.webpages_Roles" Role="webpages_Roles" Multiplicity="*" />
+          <End Type="CodeGenerationModel.UserProfile" Role="UserProfile" Multiplicity="*" />
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CodeGenerationModelStoreContainer" CdmEntityContainer="CodeGenerationEntities">
+          <EntitySetMapping Name="CodeGeneration_TagModel">
+            <EntityTypeMapping TypeName="CodeGenerationModel.CodeGeneration_TagModel">
+              <MappingFragment StoreEntitySet="CodeGeneration_TagModel">
+                <ScalarProperty Name="CodeGeneration_Id" ColumnName="CodeGeneration_Id" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="TagName" ColumnName="TagName" />
+                <ScalarProperty Name="CodeGeneration_Tag_ID" ColumnName="CodeGeneration_Tag_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CodeGenerators">
+            <EntityTypeMapping TypeName="CodeGenerationModel.CodeGenerator">
+              <MappingFragment StoreEntitySet="CodeGenerators">
+                <ScalarProperty Name="Published" ColumnName="Published" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="ScriptThatExecutesOnModalLoad" ColumnName="ScriptThatExecutesOnModalLoad" />
+                <ScalarProperty Name="ScriptThatExecutesUponButtonPress" ColumnName="ScriptThatExecutesUponButtonPress" />
+                <ScalarProperty Name="HTMLThatGoesInModal" ColumnName="HTMLThatGoesInModal" />
+                <ScalarProperty Name="CGCreatedBy" ColumnName="CGCreatedBy" />
+                <ScalarProperty Name="CGDescription" ColumnName="CGDescription" />
+                <ScalarProperty Name="CGName" ColumnName="CGName" />
+                <ScalarProperty Name="CodeGenerationID" ColumnName="CodeGenerationID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserProfiles">
+            <EntityTypeMapping TypeName="CodeGenerationModel.UserProfile">
+              <MappingFragment StoreEntitySet="UserProfile">
+                <ScalarProperty Name="LastLoggedIn" ColumnName="LastLoggedIn" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="id_user" ColumnName="id_user" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="webpages_Membership">
+            <EntityTypeMapping TypeName="CodeGenerationModel.webpages_Membership">
+              <MappingFragment StoreEntitySet="webpages_Membership">
+                <ScalarProperty Name="PasswordVerificationTokenExpirationDate" ColumnName="PasswordVerificationTokenExpirationDate" />
+                <ScalarProperty Name="PasswordVerificationToken" ColumnName="PasswordVerificationToken" />
+                <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
+                <ScalarProperty Name="PasswordChangedDate" ColumnName="PasswordChangedDate" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="PasswordFailuresSinceLastSuccess" ColumnName="PasswordFailuresSinceLastSuccess" />
+                <ScalarProperty Name="LastPasswordFailureDate" ColumnName="LastPasswordFailureDate" />
+                <ScalarProperty Name="IsConfirmed" ColumnName="IsConfirmed" />
+                <ScalarProperty Name="ConfirmationToken" ColumnName="ConfirmationToken" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="webpages_OAuthMembership">
+            <EntityTypeMapping TypeName="CodeGenerationModel.webpages_OAuthMembership">
+              <MappingFragment StoreEntitySet="webpages_OAuthMembership">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ProviderUserId" ColumnName="ProviderUserId" />
+                <ScalarProperty Name="Provider" ColumnName="Provider" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="webpages_Roles">
+            <EntityTypeMapping TypeName="CodeGenerationModel.webpages_Roles">
+              <MappingFragment StoreEntitySet="webpages_Roles">
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="webpages_UsersInRoles" TypeName="CodeGenerationModel.webpages_UsersInRoles" StoreEntitySet="webpages_UsersInRoles">
+            <EndProperty Name="UserProfile">
+              <ScalarProperty Name="id_user" ColumnName="UserId" />
+            </EndProperty>
+            <EndProperty Name="webpages_Roles">
+              <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
