@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CodeGeneration.Domain.ServiceInterfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,5 +13,7 @@ namespace CodeGeneration.Interfaces
         void Logout();
         int GetUserId();
         bool IsLoggedIn();
+        void RegisterUser(string email, string password, IEmailService emailService, IUrlBuilder urlBuilder);
+        bool Confirm(string confirmation);
     }
 }

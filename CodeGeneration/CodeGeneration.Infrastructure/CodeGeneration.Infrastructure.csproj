@@ -73,8 +73,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CodeGeneratorDb.edmx</DependentUpon>
     </Compile>
+    <Compile Include="EmailsSent.cs">
+      <DependentUpon>CodeGeneratorDb.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepositoryImplementations\CodeGenerationRepository.cs" />
+    <Compile Include="RepositoryImplementations\EmailRepository.cs" />
     <Compile Include="RepositoryImplementations\UserRepository.cs" />
     <Compile Include="UserProfile.cs">
       <DependentUpon>CodeGeneratorDb.tt</DependentUpon>

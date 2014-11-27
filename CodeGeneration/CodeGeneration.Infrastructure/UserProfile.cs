@@ -26,7 +26,7 @@ namespace CodeGeneration.Infrastructure
         public string LastName { get; set; }
         public System.DateTime CreatedAt { get; set; }
         public System.DateTime UpdatedAt { get; set; }
-        public System.DateTime LastLoggedIn { get; set; }
+        public Nullable<System.DateTime> LastLoggedIn { get; set; }
     
         public virtual ICollection<CodeGenerator> CodeGenerators { get; set; }
         public virtual ICollection<webpages_Roles> webpages_Roles { get; set; }

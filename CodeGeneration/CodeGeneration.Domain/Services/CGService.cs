@@ -22,17 +22,28 @@ namespace CodeGeneration.Domain.Services
         private void setProperties()
         {
             this.DEFAULT_MODAL_HTML = @"<modal>
+    <!-- If you ever heard of Emmett, it's this quick way of writing html. Try typing 'ul.some-name>li*5' and hit TAB (no single quotes) 
+        More info at emmet.io
+->
 
+    <!-- Example mark up 
     <div class=""form-group"">
         <label class=""col-sm-4"">Class Name: </label>
         <div class=""col-sm-8"">
             <input type=""text"" id=""class-name"" class=""form-control"" />
         </div>
     </div>
+    -->
 
 </modal>";
 
-            this.DEFAULT_SCRIPT = @"";
+            this.DEFAULT_SCRIPT = @"
+
+//cgComponent.newPage('PageName.cs', 'public class Car { }', 'csharp');
+//cgComponent is a lightweight script. The only method you need to use of cgComponent is newPage. 
+//newPage generates a div that is populated with whatever code you generated. It also creates a tab for that div. 
+//the more pages you create, the more tabs it'll add. Try it! 
+";
         }
 
         public CodeGenerationModel GetNewCGModel()

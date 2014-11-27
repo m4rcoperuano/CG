@@ -1,8 +1,4 @@
-﻿@{
-  
-}
-
-<ul class="nav nav-pills" id="dashboard-menu" style="border-bottom: 1px solid #CCC; padding-bottom: 10px; margin-bottom: 10px;">
+﻿<ul class="nav nav-pills" id="dashboard-menu" style="border-bottom: 1px solid #CCC; padding-bottom: 10px; margin-bottom: 10px;">
     <li class="@ViewBag.DashboardMenu_Home">
         <a href="@Url.Action("Index", "Dashboard")">
             <span class="glyphicon glyphicon-dashboard"></span>
@@ -20,19 +16,36 @@
     {
         <li class="active">
             <a href="#editing" id="cg-edit-link" style="background-color: #f1f1f1; color: #428bca; cursor: default" class="">
-                <span class="glyphicon glyphicon-pencil">
-
-                </span>
+                <span class="glyphicon glyphicon-pencil"></span>
                 <span>
                     @ViewBag.CGTitle
                 </span>
             </a>
         </li>
-        <li class="pull-right">
-            <a href="">
-                <i class="glyphicon glyphicon-cog"></i>
-                Global Editor Settings
-            </a>
-        </li>
+        
     }
 </ul>
+
+<div class="modal fade" id="editor-settings-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">
+                    <span class="glyphicon glyphicon-cog"></span>
+                    Editor Settings</h4>
+            </div>
+            <div class="modal-body" id="editor-settings-modal-body">
+                <div id="grid-views">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

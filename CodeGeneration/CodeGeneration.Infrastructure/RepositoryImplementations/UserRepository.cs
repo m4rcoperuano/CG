@@ -17,14 +17,15 @@ namespace CodeGeneration.Infrastructure.RepositoryImplementations
             Mapper.CreateMap<UserProfile, UserModel>();
         }
 
-        public int SaveUser(UserModel user)
+        public int SaveNewUser(UserModel user)
         {
             using (var db = new CodeGenerationEntities())
             {
                 UserProfile userProfile = Mapper.Map<UserProfile>(user);
+                userProfile.LastLoggedIn = null;
                 db.UserProfiles.Add(userProfile);
                 db.SaveChanges();
-                return 1;
+                return userProfile.id_user;
             }
         }
 
@@ -37,14 +38,31 @@ namespace CodeGeneration.Infrastructure.RepositoryImplementations
             }
         }
 
+        public UserModel GetUserViaEmail(string email)
+        {
+            using (var db = new CodeGenerationEntities())
+            {
+                var dbUser = db.UserProfiles.SingleOrDefault(x => x.email == email);
+                UserModel userModel = Mapper.Map<UserModel>(dbUser);
+                if (dbUser != null)
+                {
+                    userModel.Email = dbUser.email;
+                }
+
+                return userModel;
+            }
+        }
+
         public bool RecordUserLogin(int id, DateTime nowTime)
         {
             using (var db = new CodeGenerationEntities())
             {
                 UserProfile userProfile = db.UserProfiles.Find(id);
-                //userProfile.LastLoggedIn = nowTime;
+                userProfile.LastLoggedIn = nowTime;
                 return true;
             }
         }
+
+
     }
 }

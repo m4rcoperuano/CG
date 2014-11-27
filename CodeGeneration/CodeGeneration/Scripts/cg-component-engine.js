@@ -26,7 +26,6 @@
             _modalName = "[Untitled]";
         }
         var modal = '<div id="' + _defaultModalId + '" class="modal fade">\
-      <form class="form-horizontal">\
   <div class="modal-dialog">\
     <div class="modal-content">\
       <div class="modal-header">\
@@ -42,7 +41,6 @@
       </div>\
     </div>\
   </div>\
-    </form>\
 </div>';
 
         $('body').append(modal);

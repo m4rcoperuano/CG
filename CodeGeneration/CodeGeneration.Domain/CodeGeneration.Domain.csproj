@@ -46,14 +46,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FauxServices\FauxEmailService.cs" />
     <Compile Include="Models\CodeGenerationModel.cs" />
     <Compile Include="Models\CodeGeneration_TagModel.cs" />
+    <Compile Include="Models\EmailModel.cs" />
     <Compile Include="Models\LanguagesModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepositoryInterfaces\ICodeGenerationRepository.cs" />
+    <Compile Include="RepositoryInterfaces\IEmailRepository.cs" />
     <Compile Include="RepositoryInterfaces\IUserRepository.cs" />
+    <Compile Include="ServiceInterfaces\IEmailService.cs" />
     <Compile Include="Services\CGService.cs" />
+    <Compile Include="Services\EmailService.cs" />
     <Compile Include="Services\LanguagesService.cs" />
     <Compile Include="Services\UserService.cs" />
   </ItemGroup>

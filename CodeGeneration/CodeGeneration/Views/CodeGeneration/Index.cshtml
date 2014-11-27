@@ -82,7 +82,7 @@
                                 </a>
                             </td>
                             <td class="cg-description-column">
-                                @cg.CGDescription
+                                @Html.Raw(cg.CGDescription.Replace("\n", "<br/>"))
                             </td>
                             <td class="cg-updated-at-column">
                                 @cg.UpdatedAt.ToString("g")

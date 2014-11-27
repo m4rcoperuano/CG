@@ -1,4 +1,6 @@
-﻿using CodeGeneration.Domain.RepositoryInterfaces;
+﻿using CodeGeneration.Domain.Models;
+using CodeGeneration.Domain.RepositoryInterfaces;
+using CodeGeneration.Domain.ServiceInterfaces;
 using CodeGeneration.Domain.Services;
 using System;
 using System.Collections.Generic;
@@ -21,6 +23,7 @@ namespace CodeGeneration.Models.User
         public string ConfirmPassword { get; set; }
 
         [Display(Name="First Name")]
+        [Required]
         public string FirstName { get; set; }
         [Display(Name="Last Name")]
         public string LastName { get; set; }
@@ -28,18 +31,22 @@ namespace CodeGeneration.Models.User
         public int Registration(IUserRepository userRepository)
         {
             UserService userService = new UserService(userRepository);
-            //TODO Registration Logic
-            //....
-            //END TODO
+            if (userService.CheckIfUserAlreadyExists(this.Email))
+            {
+                return 0;
+            }
 
-            Domain.Models.UserModel user = new Domain.Models.UserModel();
+            UserModel user = new UserModel();
             user.FirstName = this.FirstName;
             user.LastName = this.LastName;
             user.Password = this.Password;
             user.Email = this.Email;
 
             int userId = userService.SaveUser(user);
+            
+
             return userId;
         }
+
     }
 }

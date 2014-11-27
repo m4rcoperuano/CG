@@ -26,10 +26,11 @@ namespace CodeGeneration.Infrastructure
         }
     
         public DbSet<CodeGeneration_TagModel> CodeGeneration_TagModel { get; set; }
-        public DbSet<CodeGenerator> CodeGenerators { get; set; }
-        public DbSet<UserProfile> UserProfiles { get; set; }
         public DbSet<webpages_Membership> webpages_Membership { get; set; }
         public DbSet<webpages_OAuthMembership> webpages_OAuthMembership { get; set; }
         public DbSet<webpages_Roles> webpages_Roles { get; set; }
+        public DbSet<CodeGenerator> CodeGenerators { get; set; }
+        public DbSet<EmailsSent> EmailsSents { get; set; }
+        public DbSet<UserProfile> UserProfiles { get; set; }
     }
 }

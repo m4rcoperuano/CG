@@ -22,8 +22,16 @@ namespace CodeGeneration.Models.User
         {
             UserService userService = new UserService(userRepo);
             int userId = membership.Login(this.Email, this.Password, this.RememberMe);
-            userService.RecordUserLogin(userId, time.RightNow());
-            return true;
+
+            if (userId > 0)
+            {
+                userService.RecordUserLogin(userId, time.RightNow());
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

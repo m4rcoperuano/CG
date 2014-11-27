@@ -7,9 +7,41 @@
 <div class="container">
     <div class="row">
         <div class="col-md-7">
-            <div class="well"></div>
+            <div class="well">
+                <h3>
+                    The site is in its early stages. Some day i'll add/finish the site, I just have too many projects going on. If you
+                    want to contact me, shoot me an email at marco.j.ledesma@gmail.com.
+                </h3>
+            </div>
         </div>
         <div class="col-md-5">
+            @if (ViewBag.RegisterSuccessMessage != null)
+            {
+                <div class="alert alert-success">
+                    <p>
+                        @ViewBag.RegisterSuccessMessage
+                    </p>
+                </div>
+            }
+
+            @if (ViewBag.ConfirmSuccess != null)
+            {
+                <div class="alert alert-success">
+                    <p>
+                        @ViewBag.ConfirmSuccess
+                    </p>
+                </div>
+            }
+
+            @if (ViewBag.ConfirmError != null)
+            {
+                <div class="alert alert-danger">
+                    <p>
+                        @ViewBag.ConfirmError
+                    </p>
+                </div>
+            }
+
 
             <div class="panel panel-primary">
                 <div class="panel-heading">
@@ -50,6 +82,9 @@
                             </div>
                         </div>
                     }
+                    <div class="required">
+                    @Html.ValidationSummary(true, "Please see errors below")
+                        </div>
                 </div>
             </div>
 

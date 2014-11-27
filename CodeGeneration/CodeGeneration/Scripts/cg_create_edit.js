@@ -114,8 +114,6 @@ function bindPageEvents(htmlEditor, jsOnModalOpen, jsOnExec) {
     });
 }
 
-
-
 function closePreview() {
     $('#preview-outer-container').hide();
     cgComponent.resetEverything();
@@ -171,4 +169,8 @@ function showSaveNotification() {
 
 function hideSaveNotification() {
     $('#save-notification').fadeOut();
+}
+
+function showEditorSettings() {
+    $('#editor-settings-modal').modal("show");
 }

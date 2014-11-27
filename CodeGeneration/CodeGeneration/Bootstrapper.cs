@@ -6,6 +6,8 @@ using CodeGeneration.Infrastructure.RepositoryImplementations;
 using CodeGeneration.Interfaces;
 using CodeGeneration.Services;
 using CodeGeneration.Membership;
+using CodeGeneration.Domain.FauxServices;
+using CodeGeneration.Domain.ServiceInterfaces;
 
 namespace CodeGeneration
 {
@@ -31,10 +33,16 @@ namespace CodeGeneration
 
         public static void RegisterTypes(IUnityContainer container)
         {
+            //data bindings
             container.RegisterType<IUserRepository, UserRepository>();
             container.RegisterType<ICodeGenerationRepository, CodeGenerationRepository>();
+            container.RegisterType<IEmailRepository, EmailRepository>();
+
+            //system bindings
             container.RegisterType<ISystemClock, SystemClockService>();
             container.RegisterType<IMembership, CGMembership>();
+            container.RegisterType<IEmailService, FauxEmailService>();
+            container.RegisterType<IUrlBuilder, UrlBuilder>();
         }
     }
 }

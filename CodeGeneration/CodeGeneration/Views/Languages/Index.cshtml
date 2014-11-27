@@ -4,6 +4,18 @@
     ViewBag.Title = "All LAnguages";
 }
 
+@section Scripts
+{
+    <style>
+        .last-updated-column {
+            width: 150px;
+        }
+        .cg-name-column {
+            width: 210px;
+        }
+    </style>
+}
+
 <div class="container">
     <div class="row">
         <div class="col-md-12">
@@ -22,7 +34,7 @@
                     @foreach (var lm in Model)
                     {
                         <tr>
-                            <td>
+                            <td class="cg-name-column">
                                 <a href="@Url.Action("Details", "CodeGeneration", new { @id = lm.CG_Id })">
                                     @lm.CGName
                                 </a>
@@ -30,8 +42,8 @@
                             <td>
                                 @lm.Description
                             </td>
-                            <td>
-                                @lm.LastUpdated
+                            <td class="last-updated-column">
+                                @lm.LastUpdated.ToString("g")
                             </td>
                         </tr>
                     }

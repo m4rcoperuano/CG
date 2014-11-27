@@ -7,11 +7,8 @@ using System.Threading.Tasks;
 
 namespace CodeGeneration.Domain.RepositoryInterfaces
 {
-    public interface IUserRepository
+    public interface IEmailRepository
     {
-        int SaveNewUser(UserModel user);
-        UserModel GetUser(int id);
-        UserModel GetUserViaEmail(string email);
-        bool RecordUserLogin(int id, DateTime nowTime);
+        void SaveEmailRecord(EmailModel emailModel); 
     }
 }

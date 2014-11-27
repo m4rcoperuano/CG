@@ -8,6 +8,7 @@
         <EntityContainer Name="CodeGenerationModelStoreContainer">
           <EntitySet Name="CodeGeneration_TagModel" EntityType="CodeGenerationModel.Store.CodeGeneration_TagModel" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="CodeGenerators" EntityType="CodeGenerationModel.Store.CodeGenerators" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="EmailsSent" EntityType="CodeGenerationModel.Store.EmailsSent" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="UserProfile" EntityType="CodeGenerationModel.Store.UserProfile" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="webpages_Membership" EntityType="CodeGenerationModel.Store.webpages_Membership" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="webpages_OAuthMembership" EntityType="CodeGenerationModel.Store.webpages_OAuthMembership" store:Type="Tables" Schema="dbo" />
@@ -46,7 +47,7 @@
           </Key>
           <Property Name="CodeGenerationID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="CGName" Type="nvarchar" Nullable="false" MaxLength="200" />
-          <Property Name="CGDescription" Type="nvarchar" Nullable="false" MaxLength="200" />
+          <Property Name="CGDescription" Type="nvarchar" Nullable="false" MaxLength="1000" />
           <Property Name="CGCreatedBy" Type="int" Nullable="false" />
           <Property Name="HTMLThatGoesInModal" Type="nvarchar(max)" Nullable="false" />
           <Property Name="ScriptThatExecutesUponButtonPress" Type="nvarchar(max)" Nullable="false" />
@@ -55,6 +56,16 @@
           <Property Name="UpdatedAt" Type="datetime" Nullable="false" />
           <Property Name="Active" Type="bit" Nullable="false" />
           <Property Name="Published" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EmailsSent">
+          <Key>
+            <PropertyRef Name="id_email" />
+          </Key>
+          <Property Name="id_email" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="email" Type="nvarchar" Nullable="false" MaxLength="200" />
+          <Property Name="subject" Type="nvarchar" Nullable="false" MaxLength="200" />
+          <Property Name="body" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="sent_on" Type="datetime" />
         </EntityType>
         <EntityType Name="UserProfile">
           <Key>
@@ -66,7 +77,7 @@
           <Property Name="LastName" Type="nvarchar" Nullable="false" MaxLength="250" />
           <Property Name="CreatedAt" Type="datetime" Nullable="false" />
           <Property Name="UpdatedAt" Type="datetime" Nullable="false" />
-          <Property Name="LastLoggedIn" Type="datetime" Nullable="false" />
+          <Property Name="LastLoggedIn" Type="datetime" />
         </EntityType>
         <EntityType Name="webpages_Membership">
           <Key>
@@ -164,15 +175,16 @@
       <Schema Namespace="CodeGenerationModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="CodeGenerationEntities" p1:LazyLoadingEnabled="true">
           <EntitySet Name="CodeGeneration_TagModel" EntityType="CodeGenerationModel.CodeGeneration_TagModel" />
-          <EntitySet Name="CodeGenerators" EntityType="CodeGenerationModel.CodeGenerator" />
-          <EntitySet Name="UserProfiles" EntityType="CodeGenerationModel.UserProfile" />
           <EntitySet Name="webpages_Membership" EntityType="CodeGenerationModel.webpages_Membership" />
           <EntitySet Name="webpages_OAuthMembership" EntityType="CodeGenerationModel.webpages_OAuthMembership" />
           <EntitySet Name="webpages_Roles" EntityType="CodeGenerationModel.webpages_Roles" />
+          <EntitySet Name="CodeGenerators" EntityType="CodeGenerationModel.CodeGenerator" />
           <AssociationSet Name="FK_CodeGeneration_TagModel_CodeGenerators" Association="CodeGenerationModel.FK_CodeGeneration_TagModel_CodeGenerators">
             <End Role="CodeGenerator" EntitySet="CodeGenerators" />
             <End Role="CodeGeneration_TagModel" EntitySet="CodeGeneration_TagModel" />
           </AssociationSet>
+          <EntitySet Name="EmailsSents" EntityType="CodeGenerationModel.EmailsSent" />
+          <EntitySet Name="UserProfiles" EntityType="CodeGenerationModel.UserProfile" />
           <AssociationSet Name="FK_CodeGenerators_UserProfile" Association="CodeGenerationModel.FK_CodeGenerators_UserProfile">
             <End Role="UserProfile" EntitySet="UserProfiles" />
             <End Role="CodeGenerator" EntitySet="CodeGenerators" />
@@ -192,38 +204,6 @@
           <Property Type="DateTime" Name="UpdatedAt" Nullable="false" Precision="3" />
           <Property Type="Guid" Name="CodeGeneration_Id" Nullable="false" />
           <NavigationProperty Name="CodeGenerator" Relationship="CodeGenerationModel.FK_CodeGeneration_TagModel_CodeGenerators" FromRole="CodeGeneration_TagModel" ToRole="CodeGenerator" />
-        </EntityType>
-        <EntityType Name="CodeGenerator">
-          <Key>
-            <PropertyRef Name="CodeGenerationID" />
-          </Key>
-          <Property Type="Guid" Name="CodeGenerationID" Nullable="false" />
-          <Property Type="String" Name="CGName" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="CGDescription" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="CGCreatedBy" Nullable="false" />
-          <Property Type="String" Name="HTMLThatGoesInModal" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="ScriptThatExecutesUponButtonPress" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="ScriptThatExecutesOnModalLoad" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="DateTime" Name="CreatedAt" Nullable="false" Precision="3" />
-          <Property Type="DateTime" Name="UpdatedAt" Nullable="false" Precision="3" />
-          <Property Type="Boolean" Name="Active" Nullable="false" />
-          <Property Type="Boolean" Name="Published" Nullable="false" />
-          <NavigationProperty Name="CodeGeneration_TagModel" Relationship="CodeGenerationModel.FK_CodeGeneration_TagModel_CodeGenerators" FromRole="CodeGenerator" ToRole="CodeGeneration_TagModel" />
-          <NavigationProperty Name="UserProfile" Relationship="CodeGenerationModel.FK_CodeGenerators_UserProfile" FromRole="CodeGenerator" ToRole="UserProfile" />
-        </EntityType>
-        <EntityType Name="UserProfile">
-          <Key>
-            <PropertyRef Name="id_user" />
-          </Key>
-          <Property Type="Int32" Name="id_user" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="email" Nullable="false" MaxLength="56" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="FirstName" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="LastName" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Type="DateTime" Name="CreatedAt" Nullable="false" Precision="3" />
-          <Property Type="DateTime" Name="UpdatedAt" Nullable="false" Precision="3" />
-          <Property Type="DateTime" Name="LastLoggedIn" Nullable="false" Precision="3" />
-          <NavigationProperty Name="CodeGenerators" Relationship="CodeGenerationModel.FK_CodeGenerators_UserProfile" FromRole="UserProfile" ToRole="CodeGenerator" />
-          <NavigationProperty Name="webpages_Roles" Relationship="CodeGenerationModel.webpages_UsersInRoles" FromRole="UserProfile" ToRole="webpages_Roles" />
         </EntityType>
         <EntityType Name="webpages_Membership">
           <Key>
@@ -258,6 +238,24 @@
           <Property Type="String" Name="RoleName" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="UserProfiles" Relationship="CodeGenerationModel.webpages_UsersInRoles" FromRole="webpages_Roles" ToRole="UserProfile" />
         </EntityType>
+        <EntityType Name="CodeGenerator">
+          <Key>
+            <PropertyRef Name="CodeGenerationID" />
+          </Key>
+          <Property Type="Guid" Name="CodeGenerationID" Nullable="false" />
+          <Property Type="String" Name="CGName" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="CGDescription" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="CGCreatedBy" Nullable="false" />
+          <Property Type="String" Name="HTMLThatGoesInModal" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ScriptThatExecutesUponButtonPress" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ScriptThatExecutesOnModalLoad" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="CreatedAt" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="UpdatedAt" Nullable="false" Precision="3" />
+          <Property Type="Boolean" Name="Active" Nullable="false" />
+          <Property Type="Boolean" Name="Published" Nullable="false" />
+          <NavigationProperty Name="CodeGeneration_TagModel" Relationship="CodeGenerationModel.FK_CodeGeneration_TagModel_CodeGenerators" FromRole="CodeGenerator" ToRole="CodeGeneration_TagModel" />
+          <NavigationProperty Name="UserProfile" Relationship="CodeGenerationModel.FK_CodeGenerators_UserProfile" FromRole="CodeGenerator" ToRole="UserProfile" />
+        </EntityType>
         <Association Name="FK_CodeGeneration_TagModel_CodeGenerators">
           <End Type="CodeGenerationModel.CodeGenerator" Role="CodeGenerator" Multiplicity="1" />
           <End Type="CodeGenerationModel.CodeGeneration_TagModel" Role="CodeGeneration_TagModel" Multiplicity="*" />
@@ -270,6 +268,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="EmailsSent">
+          <Key>
+            <PropertyRef Name="id_email" />
+          </Key>
+          <Property Type="Int32" Name="id_email" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="email" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="subject" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="body" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="sent_on" Precision="3" />
+        </EntityType>
+        <EntityType Name="UserProfile">
+          <Key>
+            <PropertyRef Name="id_user" />
+          </Key>
+          <Property Type="Int32" Name="id_user" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="email" Nullable="false" MaxLength="56" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="FirstName" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="LastName" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="CreatedAt" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="UpdatedAt" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="LastLoggedIn" Precision="3" />
+          <NavigationProperty Name="CodeGenerators" Relationship="CodeGenerationModel.FK_CodeGenerators_UserProfile" FromRole="UserProfile" ToRole="CodeGenerator" />
+          <NavigationProperty Name="webpages_Roles" Relationship="CodeGenerationModel.webpages_UsersInRoles" FromRole="UserProfile" ToRole="webpages_Roles" />
+        </EntityType>
         <Association Name="FK_CodeGenerators_UserProfile">
           <End Type="CodeGenerationModel.UserProfile" Role="UserProfile" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -305,36 +327,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="CodeGenerators">
-            <EntityTypeMapping TypeName="CodeGenerationModel.CodeGenerator">
-              <MappingFragment StoreEntitySet="CodeGenerators">
-                <ScalarProperty Name="Published" ColumnName="Published" />
-                <ScalarProperty Name="Active" ColumnName="Active" />
-                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
-                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
-                <ScalarProperty Name="ScriptThatExecutesOnModalLoad" ColumnName="ScriptThatExecutesOnModalLoad" />
-                <ScalarProperty Name="ScriptThatExecutesUponButtonPress" ColumnName="ScriptThatExecutesUponButtonPress" />
-                <ScalarProperty Name="HTMLThatGoesInModal" ColumnName="HTMLThatGoesInModal" />
-                <ScalarProperty Name="CGCreatedBy" ColumnName="CGCreatedBy" />
-                <ScalarProperty Name="CGDescription" ColumnName="CGDescription" />
-                <ScalarProperty Name="CGName" ColumnName="CGName" />
-                <ScalarProperty Name="CodeGenerationID" ColumnName="CodeGenerationID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserProfiles">
-            <EntityTypeMapping TypeName="CodeGenerationModel.UserProfile">
-              <MappingFragment StoreEntitySet="UserProfile">
-                <ScalarProperty Name="LastLoggedIn" ColumnName="LastLoggedIn" />
-                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
-                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="id_user" ColumnName="id_user" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="webpages_Membership">
             <EntityTypeMapping TypeName="CodeGenerationModel.webpages_Membership">
               <MappingFragment StoreEntitySet="webpages_Membership">
@@ -366,6 +358,47 @@
               <MappingFragment StoreEntitySet="webpages_Roles">
                 <ScalarProperty Name="RoleName" ColumnName="RoleName" />
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CodeGenerators">
+            <EntityTypeMapping TypeName="CodeGenerationModel.CodeGenerator">
+              <MappingFragment StoreEntitySet="CodeGenerators">
+                <ScalarProperty Name="Published" ColumnName="Published" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="ScriptThatExecutesOnModalLoad" ColumnName="ScriptThatExecutesOnModalLoad" />
+                <ScalarProperty Name="ScriptThatExecutesUponButtonPress" ColumnName="ScriptThatExecutesUponButtonPress" />
+                <ScalarProperty Name="HTMLThatGoesInModal" ColumnName="HTMLThatGoesInModal" />
+                <ScalarProperty Name="CGCreatedBy" ColumnName="CGCreatedBy" />
+                <ScalarProperty Name="CGDescription" ColumnName="CGDescription" />
+                <ScalarProperty Name="CGName" ColumnName="CGName" />
+                <ScalarProperty Name="CodeGenerationID" ColumnName="CodeGenerationID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmailsSents">
+            <EntityTypeMapping TypeName="CodeGenerationModel.EmailsSent">
+              <MappingFragment StoreEntitySet="EmailsSent">
+                <ScalarProperty Name="sent_on" ColumnName="sent_on" />
+                <ScalarProperty Name="body" ColumnName="body" />
+                <ScalarProperty Name="subject" ColumnName="subject" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="id_email" ColumnName="id_email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserProfiles">
+            <EntityTypeMapping TypeName="CodeGenerationModel.UserProfile">
+              <MappingFragment StoreEntitySet="UserProfile">
+                <ScalarProperty Name="LastLoggedIn" ColumnName="LastLoggedIn" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="id_user" ColumnName="id_user" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
